@@ -84,11 +84,7 @@ def main():
 	if argcnt == 8:
 		debug = int(sys.argv[7]) 
 
-<<<<<<< HEAD
 	#print 'debug='+str(debug)
-=======
-	print 'debug='+str(debug)
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 
 	if debug == 0:
 		resfile = 'res_' + tensor
@@ -101,11 +97,7 @@ def main():
 	else:
 		max_iter=50
 
-<<<<<<< HEAD
 	#print 'max_iter='+str(max_iter)
-=======
-	print 'max_iter='+str(max_iter)
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 
 	# initialize factor matrices
 	facsz=sys.argv[2].split(',')
@@ -113,11 +105,7 @@ def main():
 	modes = []
 	if argcnt >= 6:
 		modes=sys.argv[5].split(',')
-<<<<<<< HEAD
 	#print modes
-=======
-	print modes
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 	nmode=len(facsz)
 
 	#facsz=[8,184,184,5632]
@@ -258,12 +246,8 @@ def main():
 			f.write("norm_residual="+str(norm_residual)+"\n")
 			f.write("normx="+str(normx)+'\n')
 			fit = 1-norm_residual/normx
-<<<<<<< HEAD
 			print "\n##iteration="+str(r+1)+",fit="+str(fit)+'\n'
 			f.write("\n##iteration="+str(r+1)+",fit="+str(fit)+'\n')
-=======
-			f.write("##iteration="+str(r)+",fit="+str(fit)+'\n')
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 			fitchange = abs(fitold - fit);
 			db.completeQuery(result.queryID)
 
@@ -276,10 +260,7 @@ def main():
 	
 	if debug == 0:
 		msg = 'cp_als Time elapsed: %d min %d.%d sec.' % (minutes, seconds, microsec)
-<<<<<<< HEAD
 		print msg+'\n\n'
-=======
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 		f.write(msg+'\n\n')
 		f.close()
 

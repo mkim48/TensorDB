@@ -19,14 +19,7 @@
 #
 #  comp_cov_sparse.py tensor2 1000,1000,1000 100,100,100 tensor1
 #
-<<<<<<< HEAD
 #   - The example takes a 3-mode tensor of size 1000x1000x1000 with the chunk size 100x100x100 and incrementally update the covariance matrices of the old tensor tensor1 with the new tensor tensor2. The output of this example includes covariance matrices (tensor2_cov0, tensor2_cov1, and tensor2_cov2).
-=======
-#   - The example takes a 3-mode tensor of size 1000x1000x1000 with the chunk size 10
-0x100x100 and incrementally update the covariance matrices of the old tensor tensor1 
-with the new tensor tensor2. The output of this example includes covariance matrices 
-(tensor2_cov0, tensor2_cov1, and tensor2_cov2).
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 #
 # BEGIN_COPYRIGHT
 #

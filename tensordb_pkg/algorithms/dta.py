@@ -1,20 +1,13 @@
 #!/usr/bin/python
 #
-<<<<<<< HEAD
 # dta.py runs Dynamic Tensor Decomposition (DTA: Dynamic Tensor Analysis). Given the input tensor, incrementally update the tensor decomposition. This includes operations for computing the covariance matrices for an input tensor in dense representation.  
-=======
-# dta.py runs Dynamic Tensor Decomposition (DTA: Dynamic Tensor Analysis). Given the input tensor, incrementally update the tensor decomposition. This operation requires the covariance matrices of the input tensor, which are computed by comp_cov_dense.py, comp_cov_sparse.py, or comp_cov_comp.py. 
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 #
 # Parameters
 #  - tensor_name: input tensor
 #  - tensor_size: input tensor size, e.g., 1000,1000,1000 for a tensor of size 1000x1000x1000
 #  - chunk_size: chunk size for the input tensor, e.g., 100,100,100 for a chunk size 100x100x100
 #  - rank: target ranks for each mode, e.g., 5,10,15
-<<<<<<< HEAD
 #  - old tensor (optional): an old tensor on which the new tensor is incrementally updated.
-=======
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 #  - debug (optional): 1 for debugging mode (not running the operations but showing the commands), default value: 0
 #
 # Output
@@ -23,7 +16,6 @@
 # Examples
 #  dta.py tensor1 1000,1000,1000 100,100,100 2,3,4
 #
-<<<<<<< HEAD
 #   - The example takes a 3-mode tensor of size 1000x1000x1000 with the chunk size 100x100x100 and decompose the tensor. The output of this example includes factor matrices (tensor2_fac_0, tensor2_fac_1, and tensor2_fac_2) and a core (tensor2_core). 
 #
 #  dta.py tensor2 1000,1000,1000 100,100,100 2,3,4 tensor1
@@ -31,10 +23,6 @@
 #   - The example takes a 3-mode tensor of size 1000x1000x1000 with the chunk size 100x100x100 and incrementally update the tensor decomposition of the old tensor tensor1 with the new tensor tensor2. The output of this example includes factor matrices (tensor2_fac_0, tensor2_fac_1, and tensor2_fac_2) and a core (tensor2_core).
 #
 # Note: the initial DTA (without the old tensor to be incrementally updated) is used as the input of the Tucker decomposition.
-=======
-#   - The example takes a 3-mode tensor of size 1000x1000x1000 with the chunk size 100x100x100 and decompose the tensor. The output of this example includes fac
-tor matrices (tensor1_fac_0, tensor1_fac_1, and tensor1_fac_2) and a core (tensor1_core).
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 #
 # BEGIN_COPYRIGHT
 #
@@ -88,11 +76,7 @@ def handleException(inst, exitWhenDone, op=None):
 def main():
 	argcnt = len(sys.argv)
 	if argcnt < 5:
-<<<<<<< HEAD
 		print "dta.py <tensor_name> <tensor_size> <chunk_size> <rank> <old_tensor> <debug>"
-=======
-		print "dta.py <tensor_name> <tensor_size> <chunk_size> <rank> <debug>"
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 		exit(2)
 
 	start = datetime.datetime.now();
@@ -103,7 +87,6 @@ def main():
 	cov = tensor + '_cov'
 	tmp = tensor + '_tmp'
 
-<<<<<<< HEAD
 	if argcnt >= 6:
 		old_tensor=sys.argv[5]
 		old_cov = old_tensor + '_cov'
@@ -113,22 +96,11 @@ def main():
 		debug = 1
 
 	#print 'debug='+str(debug)
-=======
-	debug = 0
-	if argcnt == 6:
-		debug = 1
-
-	print 'debug='+str(debug)
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 
 	if debug == 0:
 		resfile = 'res_' + tensor
 		f = open(resfile,'a')
-<<<<<<< HEAD
 		msg = 'dta start'
-=======
-		msg = 'dtd start'
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 		f.write(msg+'\n')
 
 	facsz=sys.argv[2].split(',')
@@ -136,7 +108,6 @@ def main():
 	rank=sys.argv[4].split(',')
 	nmode=len(facsz)
 
-<<<<<<< HEAD
 	new_tensor=sys.argv[1]
 	new_cov = new_tensor + '_cov'
 	mat = new_tensor + '_mat'
@@ -180,8 +151,6 @@ def main():
 			else:
 				print query
 
-=======
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 	#create factor matrices (the chunk size is same as the tensor size)
 	for i in range(nmode):
 		query="create array "+facmat+str(i)+"<val:double>[i=1:"+str(rank[i])+","+str(rank[i])+",0,j=1:"+str(facsz[i])+","+str(facchunksz[i])+",0]"
@@ -192,14 +161,9 @@ def main():
 				result=db.executeQuery(query,"aql")
 				db.completeQuery(result.queryID)
 			except Exception, inst:
-<<<<<<< HEAD
 				if debug == 1:
 					print >> sys.stderr, "     Exception Type: %s" % type(inst)     # the exception instance
 					print >> sys.stderr, "     Exception Value: %r" % inst
-=======
-				print >> sys.stderr, "     Exception Type: %s" % type(inst)     # the exception instance
-				print >> sys.stderr, "     Exception Value: %r" % inst
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 		else:
 			print query
 
@@ -218,15 +182,10 @@ def main():
 			result=db.executeQuery(query,"aql")
 			db.completeQuery(result.queryID)
 		except Exception, inst:
-<<<<<<< HEAD
 			if debug == 1:
 				print >> sys.stderr, "     Exception Type: %s" % type(inst)     # the exception instance
 				print >> sys.stderr, "     Exception Value: %r" % inst
 
-=======
-			print >> sys.stderr, "     Exception Type: %s" % type(inst)     # the exception instance
-			print >> sys.stderr, "     Exception Value: %r" % inst
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 	else:
 		print query
 	
@@ -263,10 +222,6 @@ def main():
 	query = tmp+str(0)
 
 	for i in range(1,nmode):	
-<<<<<<< HEAD
-=======
-		print i
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 		str_idx1 = "i=1:"+str(facsz[i])+","+str(facchunksz[i])+",0"
 		prod_sz = 1
 		prod_chunksz = 1
@@ -336,24 +291,16 @@ def main():
 		f.write("norm_residual="+str(norm_residual)+"\n")
 		fit = 1-norm_residual/math.sqrt(normx)
 		f.write("fit="+str(fit)+'\n')
-<<<<<<< HEAD
 		print "\nfit="+str(fit)+'\n'
-=======
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 
 	end = datetime.datetime.now();
 	minutes, seconds = divmod((end-start).seconds, 60)
 	microsec = (end-start).microseconds
 	
 	if debug == 0:
-<<<<<<< HEAD
 		msg = 'dta Time elapsed: %d min %d.%d sec.' % (minutes, seconds, microsec)
 		f.write(msg+'\n\n')
 		print msg+'\n\n'
-=======
-		msg = 'dtd Time elapsed: %d min %d.%d sec.' % (minutes, seconds, microsec)
-		f.write(msg+'\n\n')
->>>>>>> 179692c168a8120cac788efb45c7d537185433e6
 		f.close()
 
     #Disconnect from the SciDB server.
