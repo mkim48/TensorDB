@@ -581,11 +581,11 @@ namespace scidb
             {
                 for (Coordinate j=cj; j<jUpper; j += 1)
                 {
-                    double partialProd = 0.0;
+                    float partialProd = 0.0;
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        double v1 = left[(i-ci)*kChunkLen + (k-ck)];
-                        double v2 = right[(j-cj)*kChunkLen + (k-ck)];
+                        float v1 = left[(i-ci)*kChunkLen + (k-ck)];
+                        float v2 = right[(j-cj)*kChunkLen + (k-ck)];
                         // add the product to the partial product
                         partialProd += v1 * v2;
                     }
@@ -600,11 +600,11 @@ namespace scidb
             {
                 for (Coordinate j=cj; j<jUpper; j += 1)
                 {
-                    double partialProd = 0.0;
+                    int32_t partialProd = 0.0;
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        double v1 = left[(i-ci)*kChunkLen + (k-ck)];
-                        double v2 = right[(j-cj)*kChunkLen + (k-ck)];
+                        int32_t v1 = left[(i-ci)*kChunkLen + (k-ck)];
+                        int32_t v2 = right[(j-cj)*kChunkLen + (k-ck)];
                         // add the product to the partial product
                         partialProd += v1 * v2;
                     }
@@ -619,11 +619,11 @@ namespace scidb
             {
                 for (Coordinate j=cj; j<jUpper; j += 1)
                 {
-                    double partialProd = 0.0;
+                    int16_t partialProd = 0.0;
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        double v1 = left[(i-ci)*kChunkLen + (k-ck)];
-                        double v2 = right[(j-cj)*kChunkLen + (k-ck)];
+                        int16_t v1 = left[(i-ci)*kChunkLen + (k-ck)];
+                        int16_t v2 = right[(j-cj)*kChunkLen + (k-ck)];
                         // add the product to the partial product
                         partialProd += v1 * v2;
                     }
@@ -638,11 +638,11 @@ namespace scidb
             {
                 for (Coordinate j=cj; j<jUpper; j += 1)
                 {
-                    double partialProd = 0.0;
+                    int64_t partialProd = 0.0;
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        double v1 = left[(i-ci)*kChunkLen + (k-ck)];
-                        double v2 = right[(j-cj)*kChunkLen + (k-ck)];
+                        int64_t v1 = left[(i-ci)*kChunkLen + (k-ck)];
+                        int64_t v2 = right[(j-cj)*kChunkLen + (k-ck)];
                         // add the product to the partial product
                         partialProd += v1 * v2;
                     }
@@ -657,11 +657,11 @@ namespace scidb
             {
                 for (Coordinate j=cj; j<jUpper; j += 1)
                 {
-                    double partialProd = 0.0;
+                    uint32_t partialProd = 0.0;
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        double v1 = left[(i-ci)*kChunkLen + (k-ck)];
-                        double v2 = right[(j-cj)*kChunkLen + (k-ck)];
+                        uint32_t v1 = left[(i-ci)*kChunkLen + (k-ck)];
+                        uint32_t v2 = right[(j-cj)*kChunkLen + (k-ck)];
                         // add the product to the partial product
                         partialProd += v1 * v2;
                     }
@@ -676,11 +676,11 @@ namespace scidb
             {
                 for (Coordinate j=cj; j<jUpper; j += 1)
                 {
-                    double partialProd = 0.0;
+                    uint16_t partialProd = 0.0;
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        double v1 = left[(i-ci)*kChunkLen + (k-ck)];
-                        double v2 = right[(j-cj)*kChunkLen + (k-ck)];
+                        uint16_t v1 = left[(i-ci)*kChunkLen + (k-ck)];
+                        uint16_t v2 = right[(j-cj)*kChunkLen + (k-ck)];
                         // add the product to the partial product
                         partialProd += v1 * v2;
                     }
@@ -695,11 +695,11 @@ namespace scidb
             {
                 for (Coordinate j=cj; j<jUpper; j += 1)
                 {
-                    double partialProd = 0.0;
+                    uint64_t partialProd = 0.0;
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        double v1 = left[(i-ci)*kChunkLen + (k-ck)];
-                        double v2 = right[(j-cj)*kChunkLen + (k-ck)];
+                        uint64_t v1 = left[(i-ci)*kChunkLen + (k-ck)];
+                        uint64_t v2 = right[(j-cj)*kChunkLen + (k-ck)];
                         // add the product to the partial product
                         partialProd += v1 * v2;
                     }

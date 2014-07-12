@@ -89,12 +89,12 @@ public:
                 || schemas[1].getDimensions()[1].getLength() == INFINITE_LENGTH)
             throw USER_EXCEPTION(SCIDB_SE_INFER_SCHEMA, SCIDB_LE_OP_MULTIPLY_ERROR4);
 
-        if (schemas[0].getDimensions()[1].getLength() != schemas[1].getDimensions()[0].getLength()
-                || schemas[0].getDimensions()[1].getStart() != schemas[1].getDimensions()[0].getStart())
+        if (schemas[0].getDimensions()[0].getLength() != schemas[1].getDimensions()[0].getLength()
+                || schemas[0].getDimensions()[0].getStart() != schemas[1].getDimensions()[0].getStart())
             throw USER_EXCEPTION(SCIDB_SE_INFER_SCHEMA, SCIDB_LE_OP_MULTIPLY_ERROR5);
 
         // FIXME: This condition needs to go away later
-        if (schemas[0].getDimensions()[1].getChunkInterval() != schemas[1].getDimensions()[0].getChunkInterval())
+        if (schemas[0].getDimensions()[0].getChunkInterval() != schemas[1].getDimensions()[0].getChunkInterval())
             throw USER_EXCEPTION(SCIDB_SE_INFER_SCHEMA, SCIDB_LE_OP_MULTIPLY_ERROR6);
         if (schemas[0].getAttributes()[0].getType() != schemas[1].getAttributes()[0].getType())
             throw USER_EXCEPTION(SCIDB_SE_INFER_SCHEMA, SCIDB_LE_OP_MULTIPLY_ERROR7);
@@ -107,7 +107,7 @@ public:
 		atts[0] = multAttr;
 
 		Dimensions dims(2);
-		DimensionDesc const& d1 = schemas[0].getDimensions()[0];
+		DimensionDesc const& d1 = schemas[0].getDimensions()[1];
 		dims[0] = DimensionDesc(d1.getBaseName(), 
                                 d1.getNamesAndAliases(), 
                                 d1.getStartMin(), 

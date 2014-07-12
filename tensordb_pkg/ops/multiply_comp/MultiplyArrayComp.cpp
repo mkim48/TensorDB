@@ -235,8 +235,8 @@ namespace scidb
                         for (uint64_t i = 0; i < iLength; i += iChunkLen)
                         {
                             Coordinate ci = iStart + i;
-                            pos[ROW] = ci;
-                            pos[COL] = ck;
+                            pos[COL] = ci;
+                            pos[ROW] = ck;
                             if (leftIterator->setPosition(pos)) {
                                 pos[COL] = cj;
                                 boost::shared_ptr<ChunkIterator>& outIter = chunkIterators[pos];
@@ -272,15 +272,15 @@ namespace scidb
                     //printf("Shift right matrix iteration %d:\n", (int)iterNo);
                     while (!leftIterator->end()) {
                         Coordinates const& leftPos = leftIterator->getPosition();
-                        Coordinate ci = leftPos[ROW];
-                        Coordinate ck = leftPos[COL];
+                        Coordinate ci = leftPos[COL];
+                        Coordinate ck = leftPos[ROW];
                         for (uint64_t j = 0; j < jLength; j += jChunkLen)
                         {
                             Coordinate cj = jStart + j;
                             pos[ROW] = ck;
                             pos[COL] = cj;
                             if (rightIterator->setPosition(pos)) {
-                                pos[ROW] = ci;
+                                pos[COL] = ci;
                                 boost::shared_ptr<ChunkIterator>& outIter = chunkIterators[pos];
                                 if (!outIter) {
                                     Chunk& outChunk = outArrayIter->newChunk(pos);
@@ -355,7 +355,7 @@ namespace scidb
             Coordinates outCoords(2);
             Value value(TypeLibrary::getType(attrType));
             
-            for (Coordinate i=cj; i<jUpper; i++)
+            for (Coordinate i=ci; i<jUpper; i++)
             {
                 for (Coordinate j=cj; j<jUpper; j++)
                 {
@@ -489,14 +489,14 @@ namespace scidb
                     outCoords[ROW] = i;
                     outCoords[COL] = j;
 
-                    rowCoords[ROW] = i;
+                    rowCoords[COL] = i;
                     colCoords[COL] = j;
 
                     bool empty = true;
 
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        rowCoords[COL] = kStartLeft + k;
+                        rowCoords[ROW] = kStartLeft + k;
                         colCoords[ROW] = kStartRight + k;
 
                         // get items from the chunks
@@ -604,7 +604,7 @@ namespace scidb
 					pb[z] = 0.0;
 				}
         		for(int i=ci;i<iUpper;i++) {
-            		pa[h1[t][i-ci]] = pa[h1[t][i-ci]] + s1[t][i-ci]*left[(i-ci)*iChunkLen + (k-ck)];
+            		pa[h1[t][i-ci]] = pa[h1[t][i-ci]] + s1[t][i-ci]*left[(k-ck)*iChunkLen + (i-ci)];
 				}
         		for(int j=cj;j<jUpper;j++) {
             		pb[h2[t][j-cj]] = pb[h2[t][j-cj]] + s2[t][j-cj]*right[(k-ck)*jChunkLen + (j-cj)];
@@ -685,16 +685,15 @@ namespace scidb
             double* left = (double*)leftData;
             double* right = (double*)rightData;
             double* result = (double*)resultData;
-            for (Coordinate i=ci; i<iUpper; i += 1)
-            //for (Coordinate i=ci + offset; i<iUpper; i += step)
+            for (Coordinate i=ci + offset; i<iUpper; i += step)
             {
                 for (Coordinate j=cj; j<jUpper; j += 1)
                 {
                     double partialProd = 0.0;
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        double v1 = left[(i-ci)*kChunkLen + (k-ck)];
-                        double v2 = right[(j-cj)*kChunkLen + (k-ck)];
+                        double v1 = left[(k-ck)*iChunkLen + (i-ci)];
+                        double v2 = right[(k-ck)*jChunkLen + (j-cj)];
                         // add the product to the partial product
                         partialProd += v1 * v2;
                     }
@@ -709,11 +708,11 @@ namespace scidb
             {
                 for (Coordinate j=cj; j<jUpper; j += 1)
                 {
-                    double partialProd = 0.0;
+                    float partialProd = 0.0;
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        double v1 = left[(i-ci)*kChunkLen + (k-ck)];
-                        double v2 = right[(k-ck)*jChunkLen + (j-cj)];
+                        float v1 = left[(k-ck)*iChunkLen + (i-ci)];
+                        float v2 = right[(k-ck)*jChunkLen + (j-cj)];
                         // add the product to the partial product
                         partialProd += v1 * v2;
                     }
@@ -728,11 +727,11 @@ namespace scidb
             {
                 for (Coordinate j=cj; j<jUpper; j += 1)
                 {
-                    int64_t partialProd = 0;
+                    int32_t partialProd = 0;
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        int64_t v1 = left[(i-ci)*kChunkLen + (k-ck)];
-                        int64_t v2 = right[(k-ck)*jChunkLen + (j-cj)];
+                        int32_t v1 = left[(k-ck)*iChunkLen + (i-ci)];
+                        int32_t v2 = right[(k-ck)*jChunkLen + (j-cj)];
                         // add the product to the partial product
                         partialProd += v1 * v2;
                     }
@@ -747,11 +746,11 @@ namespace scidb
             {
                 for (Coordinate j=cj; j<jUpper; j += 1)
                 {
-                    int32_t partialProd = 0;
+                    int16_t partialProd = 0;
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        int32_t v1 = left[(i-ci)*kChunkLen + (k-ck)];
-                        int32_t v2 = right[(k-ck)*jChunkLen + (j-cj)];
+                        int16_t v1 = left[(k-ck)*iChunkLen + (i-ci)];
+                        int16_t v2 = right[(k-ck)*jChunkLen + (j-cj)];
                         // add the product to the partial product
                         partialProd += v1 * v2;
                     }
@@ -769,7 +768,7 @@ namespace scidb
                     int64_t partialProd = 0;
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        int64_t v1 = left[(i-ci)*kChunkLen + (k-ck)];
+                        int64_t v1 = left[(k-ck)*iChunkLen + (i-ci)];
                         int64_t v2 = right[(k-ck)*jChunkLen + (j-cj)];
                         // add the product to the partial product
                         partialProd += v1 * v2;
@@ -785,11 +784,11 @@ namespace scidb
             {
                 for (Coordinate j=cj; j<jUpper; j += 1)
                 {
-                    uint64_t partialProd = 0;
+                    uint32_t partialProd = 0;
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        uint64_t v1 = left[(i-ci)*kChunkLen + (k-ck)];
-                        uint64_t v2 = right[(k-ck)*jChunkLen + (j-cj)];
+                        uint32_t v1 = left[(k-ck)*iChunkLen + (i-ci)];
+                        uint32_t v2 = right[(k-ck)*jChunkLen + (j-cj)];
                         // add the product to the partial product
                         partialProd += v1 * v2;
                     }
@@ -804,11 +803,11 @@ namespace scidb
             {
                 for (Coordinate j=cj; j<jUpper; j += 1)
                 {
-                    uint32_t partialProd = 0;
+                    uint16_t partialProd = 0;
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        uint32_t v1 = left[(i-ci)*kChunkLen + (k-ck)];
-                        uint32_t v2 = right[(k-ck)*jChunkLen + (j-cj)];
+                        uint16_t v1 = left[(k-ck)*iChunkLen + (i-ci)];
+                        uint16_t v2 = right[(k-ck)*jChunkLen + (j-cj)];
                         // add the product to the partial product
                         partialProd += v1 * v2;
                     }
@@ -826,7 +825,7 @@ namespace scidb
                     uint64_t partialProd = 0;
                     for (Coordinate k=ck; k<kUpper; k++)
                     {
-                        uint64_t v1 = left[(i-ci)*kChunkLen + (k-ck)];
+                        uint64_t v1 = left[(k-ck)*iChunkLen + (i-ci)];
                         uint64_t v2 = right[(k-ck)*jChunkLen + (j-cj)];
                         // add the product to the partial product
                         partialProd += v1 * v2;
@@ -883,11 +882,11 @@ namespace scidb
         jChunkLen = dims[COL].getChunkInterval();
         iLength = dims[ROW].getLength();
         jLength = dims[COL].getLength();
-        kChunkLen = leftDims[COL].getChunkInterval();
-        kLength = leftDims[COL].getLength();
-        kStartLeft = leftDims[COL].getStart();
+        kChunkLen = leftDims[ROW].getChunkInterval();
+        kLength = leftDims[ROW].getLength();
+        kStartLeft = leftDims[ROW].getStart();
         kStartRight = rightDims[ROW].getStart();
-        iStart = leftDims[ROW].getStart();
+        iStart = leftDims[COL].getStart();
         jStart = rightDims[COL].getStart();
         NetworkManager& netMgr = *NetworkManager::getInstance();
         instanceId = query->getInstanceID();
@@ -1022,7 +1021,7 @@ namespace scidb
 
     MultiplySparseArray1CompIterator::MultiplySparseArray1CompIterator(MultiplyArrayComp const& array, AttributeID id)
     : MultiplyArrayCompIterator(array, id),
-      left(array.dims[ROW].getStart(), array.dims[ROW].getLength()),
+      left(array.dims[COL].getStart(), array.dims[COL].getLength()),
       right(array.dims[COL].getStart(), array.dims[COL].getLength())
     {
         TypeId attrType = array.attrType;
@@ -1035,7 +1034,7 @@ namespace scidb
                         Value const& v = chunkIterator->getItem();
                         if (!v.isZero()) {                         
                             Coordinates const& pos = chunkIterator->getPosition();
-                            left.add(pos[ROW], pos[COL], ValueToDouble(attrType, v));
+                            left.add(pos[COL], pos[ROW], ValueToDouble(attrType, v));
                         }
                         ++(*chunkIterator);
                     }
