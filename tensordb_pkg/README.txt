@@ -3,7 +3,7 @@
 - Prerequisites
 1. SciDB 12.12 (www.scidb.org)  
 2. Armadillo C++ linear algebra library (http://arma.sourceforge.net/)
-3. FFTW library (http://www.fftw.org/)
+3. FFTW library (http://www.fftw.org/): a shared library (.so) file should be installed
 
 - Files 
 1. ErrorCodes.h
@@ -34,6 +34,11 @@
 > scidb.py startall <dbname>
 
 - Create tensor and import data using SciDB ('create array' annd 'load' commands). Note: when creating a tensor, the attribute name for each element value of the tensor must be 'val'. 
+
+// example for creating an random tensor of size 100x100x100
+iquery -naq "create array rand<val:double>[i=1:100,100,0,j=1:100,100,0,k=1:100,100,0]"
+iquery -naq "store(build(<val:double>[i=1:100,100,0,j=1:100,100,0,k=1:100,100,0],random()%2/1),rand)"
+////////////////////////////////////////////////////////////
 
 - Run algorithms/*.py 
 
