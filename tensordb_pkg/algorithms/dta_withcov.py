@@ -175,7 +175,7 @@ def main():
 			prod_sz = prod_sz * int(rank[j])
 			prod_chunksz = prod_chunksz * int(rank[j])
 		str_idx2 = "j=1:"+str(prod_sz)+","+str(prod_chunksz)+",0"
-		query = "reshape(multiply_row(transpose("+query+")," + facmat+str(i-1)+"),<val:double>["+str_idx1+","+str_idx2+"])"	
+		query = "reshape(transpose(multiply("+facmat+str(i-1)+","+query+")),<val:double>["+str_idx1+","+str_idx2+"])"	
 		query="store("+query+","+tmp+str(i)+")";
 		if debug == 0:
 			print query
@@ -190,7 +190,7 @@ def main():
 	str_idx = "i0=1:"+str(rank[0])+","+str(rank[0])+",0"
 	for j in range(1,nmode):
 		str_idx = str_idx + ",i"+str(j)+"=1:"+str(rank[j])+","+str(rank[j])+",0"
-	query = "reshape(multiply_row(transpose("+query+"),"+facmat+str(nmode-1)+"),<val:double>["+str_idx+"])"
+	query = "reshape(transpose(multiply("+facmat+str(nmode-1)+","+query+")),<val:double>["+str_idx+"])"
 	query="store("+query+","+core+")";
 	if debug == 0:
 		print query
