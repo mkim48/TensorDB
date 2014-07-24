@@ -17,11 +17,11 @@
 #  - The outputs include covariance matrices for each mode of the input tensor. The covariance matrices are <tensor_name>_cov0 for mode-1, <tensor_name>_cov1 for mode-2, etc.
 #
 # Examples
-#  comp_cov_comp.py tensor1 1000,1000,1000 100,100,100
+#  comp_cov_comp.py tensor1 1000,1000,1000 100,100,100 10
 #
-#   - The example takes a 3-mode tensor of size 1000x1000x1000 with the chunk size 100x100x100 and computes the covariance matrices of the tensor. The output of this example includes covariance matrices (tensor1_cov0, tensor1_cov1, and tensor1_cov2).
+#   - The example takes a 3-mode tensor of size 1000x1000x1000 with the chunk size 100x100x100 and computes the covariance matrices of the tensor using the threshold 10 for the compressed matrix multiplication. The output of this example includes covariance matrices (tensor1_cov0, tensor1_cov1, and tensor1_cov2).
 #
-#  comp_cov_comp.py tensor2 1000,1000,1000 100,100,100 tensor1
+#  comp_cov_comp.py tensor2 1000,1000,1000 100,100,100 10 tensor1
 #
 #   - The example takes a 3-mode tensor of size 1000x1000x1000 with the chunk size 100x100x100 and incrementally update the covariance matrices of the old tensor tensor1 with the new tensor tensor2. The output of this example includes covariance matrices (tensor2_cov0, tensor2_cov1, and tensor2_cov2).
 #

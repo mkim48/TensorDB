@@ -69,7 +69,7 @@ def handleException(inst, exitWhenDone, op=None):
 
 def main():
 	argcnt = len(sys.argv)
-	if argcnt < 6:
+	if argcnt < 5:
 		print "tucker.py <tensor_name> <tensor_size> <chunk_size> <rank> <max_iter> <debug>"
 		exit(2)
 
@@ -170,7 +170,7 @@ def main():
 					#else:
 					#	str_idx1 = "i=1:"+str(facsz[i])+","+str(facchunksz[i])+",0"
 						
-					query = "reshape(multiply_row(transpose("+query+"),"+facmat+str(i)+")),<val:double>["+str_idx1+","+str_idx2+"])"	
+					query = "reshape(multiply_row(transpose("+query+"),"+facmat+str(i)+"),<val:double>["+str_idx1+","+str_idx2+"])"	
 				query="store("+query+","+ttm+str(m)+str(i)+")";
 				if debug == 0:
 					print query
@@ -223,10 +223,10 @@ def main():
 		#compute factor matrices
 		for i in range(nmode):	
 			if facsz[i]==facchunksz[i]:
-				query="copyArray(eigen("+ztensor+str(i)+"),"+facmat+str(i)+")"
+				query="copyArray(eigen("+ztensor+str(i)+","+rank[i]+"),"+facmat+str(i)+")"
 			else:
 				query = "repart("+ztensor+str(i)+",<val:double>[i=1:"+str(facsz[i])+","+str(facsz[i])+",0,j=1:"+str(facsz[i])+","+str(facsz[i])+",0])"
-				query="repart(eigen("+query+"),<val:double>[i=1:"+str(facsz[i])+","+str(facsz[i])+",0,j=1:"+str(facsz[i])+","+str(facchunksz[i])+",0])"
+				query="repart(eigen("+query+","+rank[i]+"),<val:double>[i=1:"+str(facsz[i])+","+str(facsz[i])+",0,j=1:"+str(facsz[i])+","+str(facchunksz[i])+",0])"
 				query="copyArray("+query+","+facmat+str(i)+")"
 			if debug == 0:
 				print query
