@@ -130,7 +130,7 @@ def main():
 
     	#if old_cov, update old_cov
 		if argcnt >= 5:
-			query="select a.val+b.val into "+new_cov+str(i)+" from "+new_cov+str(i)+" a, "+old_cov+str(i)+" b"
+			query="select a.multiply+b.multiply into "+new_cov+str(i)+" from "+new_cov+str(i)+" a, "+old_cov+str(i)+" b"
 			if debug == 0:
 				print query
 				f.write(query+'\n')
